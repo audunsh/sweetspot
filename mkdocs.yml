@@ -1,0 +1,38 @@
+# mkdocs.yml
+theme:
+  logo: sweetspot_logo.png 
+  name: "material"
+  palette:
+    primary: pink
+
+site_name : Sweetspot
+
+plugins:
+  - search
+  - mkdocstrings
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - javascripts/embed-amd.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+
+nav:
+  - Home: index.md
+  - Task: Task.md
+  - Installation and execution: installation.md
+  - Example usage: example.md
+  - The algebraic solver: algebraic_solver.md
+  - The Möller-Trumbore solver: moller_trumbore.md
+  - Validation: validation.md
+  - Conclusion: conclusion.md
+  - Code Reference: 
+    - Sweetspot: Sweetspot-reference.md
+    - Algebraic solver: al-reference.md
+    - Möller-Trumbore solver: mt-reference.md
+

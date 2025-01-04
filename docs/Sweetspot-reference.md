@@ -1,0 +1,4 @@
+# Sweetspot module
+
+::: sweetspot.core
+
