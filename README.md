@@ -1,0 +1,2 @@
+# sweetspot
+showcase project
