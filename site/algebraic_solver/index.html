@@ -1,0 +1,609 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+    
+    
+      
+        <title>The algebraic solver - Sweetspot</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6b80c2a2.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#e92063">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="pink" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-classic-algebraic-solution" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Sweetspot" class="md-header__button md-logo" aria-label="Sweetspot" data-md-component="logo">
+      
+  <img src="../sweetspot_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Sweetspot
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The algebraic solver
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Sweetspot" class="md-nav__button md-logo" aria-label="Sweetspot" data-md-component="logo">
+      
+  <img src="../sweetspot_logo.png" alt="logo">
+
+    </a>
+    Sweetspot
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Task/" class="md-nav__link">
+        Task
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        Installation and execution
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../example/" class="md-nav__link">
+        Example usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          The algebraic solver
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        The algebraic solver
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intersecting-the-plane" class="md-nav__link">
+    Intersecting the plane
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boundary-check-on-triangle" class="md-nav__link">
+    Boundary check on triangle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    Sources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../moller_trumbore/" class="md-nav__link">
+        The Möller-Trumbore solver
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/" class="md-nav__link">
+        Validation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        Conclusion
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Code Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Code Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sweetspot-reference/" class="md-nav__link">
+        Sweetspot
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../al-reference/" class="md-nav__link">
+        Algebraic solver
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mt-reference/" class="md-nav__link">
+        Möller-Trumbore solver
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intersecting-the-plane" class="md-nav__link">
+    Intersecting the plane
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boundary-check-on-triangle" class="md-nav__link">
+    Boundary check on triangle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    Sources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="the-classic-algebraic-solution">The classic algebraic solution</h1>
+<h2 id="intersecting-the-plane">Intersecting the plane</h2>
+<p>The set of points <span class="arithmatex">\(\{ \mathbf{x}_p \}\)</span> on the  plane spanned by <span class="arithmatex">\(T\)</span> are uniquely determined by the norm <span class="arithmatex">\(\mathbf{N}\)</span> of the triangle, given by the cross product</p>
+<div class="arithmatex">\[\mathbf{N} = \frac{ (\mathbf{x}_2 - \mathbf{x}_1) \times (\mathbf{x}_3 - \mathbf{x}_1)}{\lVert (\mathbf{x}_2 - \mathbf{x}_1) \times (\mathbf{x}_3 - \mathbf{x}_1) \rVert}, \tag{3}\]</div>
+<p>together with the distance <span class="arithmatex">\(d\)</span> from <span class="arithmatex">\((0,0,0)\)</span> to the center of the plane <span class="arithmatex">\(\mathbf{C}\)</span>:</p>
+<div class="arithmatex">\[ d = \lVert  \mathbf{C} \rVert ,\]</div>
+<p>through the equation</p>
+<div class="arithmatex">\[\mathbf{N}\cdot \mathbf{x}_p - d =0.\tag{4}\]</div>
+<p>Thus, for the point <span class="arithmatex">\(x_* = P_*\)</span> where <span class="arithmatex">\(R\)</span> intersects the plane, we find that inserting Eq.(1) in Eq.(3) yields </p>
+<div class="arithmatex">\[\mathbf{N}\cdot(\mathbf{O} + a_* \mathbf{D}) - d =0.\]</div>
+<p>The above may be solved for <span class="arithmatex">\(a_*\)</span> to find the relation</p>
+<div class="arithmatex">\[a_* = -\frac{\mathbf{N}\cdot \mathbf{O}+d}{\mathbf{N} \cdot \mathbf{D}}, \tag{5}\]</div>
+<p>providing us with an explicit algebraic expression for the intersection point</p>
+<div class="arithmatex">\[ \mathbf{P}_* = \mathbf{O} -\Big{(} \frac{\mathbf{N}\cdot \mathbf{O}+d}{\mathbf{N} \cdot \mathbf{D}}\Big{)} \mathbf{D}.  \tag{6} \]</div>
+<p>We note that (i) the expression is singular when <span class="arithmatex">\(\mathbf{D}\)</span> is orthogonal to <span class="arithmatex">\(\mathbf{N}\)</span>, indicating that the ray is parallel to the plane (they don't intersect) and (ii) the equation may yield a negative <span class="arithmatex">\(a_*\)</span>, indicating that the ray does not intersect the triangle (from our definition of <span class="arithmatex">\(a\)</span> in Eq.(1).</p>
+<h2 id="boundary-check-on-triangle">Boundary check on triangle</h2>
+<p>A standard way to determine whether or not the point <span class="arithmatex">\(\mathbf{P}_*\)</span> is within the triangle <span class="arithmatex">\(T\)</span> is a so called <em>point-in-polygon-test</em> [1,2], which can be based on the fact that the cross-product between the vectors from the vertices of the triangle to the point <span class="arithmatex">\(\mathbf{P}_i=\mathbf{x}_i - \mathbf{P}_*\)</span>  and the vertex vectors <span class="arithmatex">\(\mathbf{X}_{ij}=\mathbf{x}_j-\mathbf{x}_i\)</span>, where <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span> are always chosen in the same cyclic (increasing) order should be aligned <em>with</em> the norm of the plane <span class="arithmatex">\(\mathbf{N}\)</span> whenever <span class="arithmatex">\(\mathbf{P}_*\)</span> is to the left of <span class="arithmatex">\(\mathbf{X}_ij\)</span> and oppositely aligned if not. </p>
+<p>Thus, the point <span class="arithmatex">\(\mathbf{P}_*\)</span> is inside the triangle <span class="arithmatex">\(T\)</span> if</p>
+<div class="arithmatex">\[\mathbf{N} \cdot (\mathbf{X}_{ij} \times \mathbf{P}_i)&gt;0 \: \: \forall \: i \in (1,2,3). \]</div>
+<p>Another approach is to do a coordinate transform into barycentric coordinates <span class="arithmatex">\(\{u_i\}\)</span>  [3], where any negative coordinate will indicate the point being outside of the triangle. The barycentric unit vectors are simply the vertices of the triangle <span class="arithmatex">\(\{\mathbf{x}_i\}\)</span>, so that the intersection point may now be expressed</p>
+<div class="arithmatex">\[\mathbf{P}_{*}=\sum_i \mathbf{x}_i u_i.\]</div>
+<p>In order to determine the coordinates, we may compute the fractional area of the of the triangles formed by <span class="arithmatex">\(\{\mathbf{x}_i, \mathbf{x}_j, \mathbf{P}_*\}_{i\neq j}\)</span>, such that</p>
+<div class="arithmatex">\[u_1= \frac{\text{Area}(\mathbf{x}_1, \mathbf{x}_2, \mathbf{P}_*)}{\text{Area}(\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3)},\]</div>
+<p>and</p>
+<div class="arithmatex">\[u_2= \frac{\text{Area}(\mathbf{x}_2, \mathbf{x}_3, \mathbf{P}_*)}{\text{Area}(\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3)},\]</div>
+<p>and finally using the fact that <span class="arithmatex">\(\sum_i u_i = 1\)</span>  to obtain</p>
+<div class="arithmatex">\[u_3 = 1 - u_1 - u_2. \tag{7}\]</div>
+<p>For this project, we shall employ the latter method, since it also forms the basis for the more efficient Möller-Trumbore algorithm we'll implement later on. </p>
+<hr />
+<h2 id="sources">Sources</h2>
+<p>[1] https://en.wikipedia.org/wiki/Point_in_polygon</p>
+<p>[2] https://erich.realtimerendering.com/ptinpoly/</p>
+<p>[3] https://en.wikipedia.org/wiki/Barycentric_coordinate_system</p>
+
+
+
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../example/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Example usage" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Example usage
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../moller_trumbore/" class="md-footer__link md-footer__link--next" aria-label="Next: The Möller-Trumbore solver" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              The Möller-Trumbore solver
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.2ab50757.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="../javascripts/embed-amd.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
