@@ -3,7 +3,7 @@ Author: Audun Skau Hansen (audunsh4@gmail.com) 2022
 
 ## Overview
 
-This project was rapidly developed as my submission to a coding challenge from a former employer. I'll keep it here to showcase that I can -- in fact -- write clean and well-documented code, as I acknowledge that some of my other open repositories may appear chaotic upon visitation.
+This project was rapidly developed as my submission to a coding challenge from a former employer. I'll keep it here to showcase that I can -- in fact -- write clean and <a href="https://audunsh.github.io/sweetspot">neatly documented</a> code, as I acknowledge that some of my other open repositories may appear chaotic upon visitation.
 
 ## Installation instructions
 
